@@ -70,6 +70,11 @@ export class RegisterPage implements OnInit {
         form.get(field)?.errors?.['minlength'].requiredLength
       } caracteres.`;
     }
+    if (form.get(field)?.hasError('maxlength')) {
+      return `A senha deve ter no máximo ${
+        form.get(field)?.errors?.['maxlength'].requiredLength
+      } caracteres.`;
+    }
     if (form.get(field)?.hasError('pattern')) {
       return 'Formato inválido.';
     }
