@@ -9,6 +9,14 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
+/*  Cores da App */
+:root {
+    --ion-color-primary: #1A73E8; /* Azul do logo */
+    --ion-color-secondary: #34A853; /* Verde do logo */
+    --ion-color-light: #F0F4F8;
+    --ion-color-dark: #202124;
+}
+
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
 

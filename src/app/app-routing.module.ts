@@ -3,25 +3,29 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'home',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'login-page',
-    loadChildren: () => import('./auth/login-page/login-page.module').then( m => m.LoginPagePageModule)
+    path: '',
+    loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'register-page',
-    loadChildren: () => import('./auth/register-page/register-page.module').then( m => m.RegisterPagePageModule)
+    path: 'register',
+    loadChildren: () => import('./auth/register/register.module').then( m => m.RegisterPageModule)
   },
   {
-    path: 'verify-email-page',
-    loadChildren: () => import('./auth/verify-email-page/verify-email-page.module').then( m => m.VerifyEmailPagePageModule)
+    path: 'forget-password',
+    loadChildren: () => import('./auth/forget-password/forget-password.module').then( m => m.ForgetPasswordPageModule)
   },
   {
-    path: 'forget-password-page',
-    loadChildren: () => import('./auth/forget-password-page/forget-password-page.module').then( m => m.ForgetPasswordPagePageModule)
-  }
+    path: 'verify-email',
+    loadChildren: () => import('./auth/verify-email/verify-email.module').then( m => m.VerifyEmailPageModule)
+  },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./admin/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+  },
 ];
 @NgModule({
   imports: [

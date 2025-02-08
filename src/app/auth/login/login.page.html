@@ -1,0 +1,64 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding login-container">
+  <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+    <ion-card class="login-card">
+      <div class="logo">
+        <img src="assets/img/app-logo.png" alt="Logo" class="logo-img">
+      </div>
+
+      <ion-card-header class="ion-text-center">
+        <ion-card-title class="welcome-text">Bem-vindo de volta</ion-card-title>
+        <p class="subtitle">Acesse sua conta para continuar</p>
+      </ion-card-header> 
+      
+      <!-- 🔥 Exibir mensagem de erro -->
+      <ion-card *ngIf="errorMessage">
+        <ion-card-content>
+          <ion-text color="danger">{{ errorMessage }}</ion-text>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card-content>
+        <ion-item class="input-item">
+          <ion-icon name="mail-outline" slot="start" class="input-icon"></ion-icon>
+          <ion-input type="email" formControlName="email" placeholder="Seu Email"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          {{ getErrorMessage(loginForm, 'email') }}
+        </ion-text>
+
+        <ion-item class="input-item">
+          <ion-icon name="lock-closed-outline" slot="start" class="input-icon"></ion-icon>
+          <ion-input type="password" formControlName="password" placeholder="Sua Senha"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          {{ getErrorMessage(loginForm, 'password') }}
+        </ion-text>
+
+        <ion-button expand="full" shape="round" color="primary" type="submit" [disabled]="loginForm.invalid">
+          <ion-icon name="log-in-outline" slot="start"></ion-icon>
+          Entrar
+        </ion-button>
+
+        <ion-button expand="full" fill="clear" shape="round" color="secondary" routerLink="/register">
+          <ion-icon name="person-add-outline" slot="start"></ion-icon>
+          Criar Conta
+        </ion-button>
+
+        <ion-button expand="full" fill="clear" shape="round" color="danger" (click)="authService.GoogleAuth()">
+          Entrar com a Conta Google
+        </ion-button>
+
+        <ion-button expand="full" fill="clear" shape="round" color="medium" routerLink="/forget-password">
+          Esqueceu a senha?
+        </ion-button>
+        
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>
