@@ -1,0 +1,7 @@
+{
+  "name": "sistema-marcacao-consulta-ionic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
