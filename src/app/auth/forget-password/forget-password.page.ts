@@ -11,7 +11,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class ForgetPasswordPage implements OnInit {
   forgetPasswordForm!: FormGroup;
-  errorMessage: string = ''; // 🔥 Armazena a mensagem de erro
+  errorMessage: string = ''; //  Armazena a mensagem de erro
+  loading = false; // Variável para controle do spinner
 
   constructor(
     private fb: FormBuilder,
@@ -26,7 +27,9 @@ export class ForgetPasswordPage implements OnInit {
   }
 
   async resetPassword() {
-    this.errorMessage = ''; // 🔥 Resetar erro antes de tentar login
+    this.errorMessage = ''; //  Resetar erro antes de tentar repor a password
+    this.loading = true; // Ativa o spinner
+
     if (this.forgetPasswordForm.valid) {
       const { email } = this.forgetPasswordForm.value;
       try {
@@ -37,13 +40,17 @@ export class ForgetPasswordPage implements OnInit {
           })
           .catch((error) => {
             window.alert(error.message);
+            this.errorMessage = error.message; //  Exibir erro
           });
       } catch (error: any) {
         alert(error.message);
-        this.errorMessage = error.message; // 🔥 Exibir erro
+        this.errorMessage = error.message; //  Exibir erro
+      } finally {
+        this.loading = false; //  O spinner SEMPRE para, independentemente do resultado
       }
     } else {
       console.log('Formulário inválido');
+      this.loading = false; // O spinner também deve parar se o formulário for inválido
     }
   }
 

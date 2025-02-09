@@ -17,7 +17,7 @@
           <p class="subtitle">Insira os seus dados para continuar</p>
         </ion-card-header> 
         
-        <!-- 🔥 Exibir mensagem de erro -->
+        <!--  Exibir mensagem de erro -->
         <ion-card *ngIf="errorMessage">
           <ion-card-content>
             <ion-text color="danger">{{ errorMessage }}</ion-text>
@@ -25,13 +25,13 @@
         </ion-card>
 
         <ion-card-content>
-          <!-- <ion-item class="input-item">
+          <ion-item class="input-item">
             <ion-icon name="person-outline" slot="start" class="input-icon"></ion-icon>
             <ion-input type="text" formControlName="name" placeholder="Seu Nome"></ion-input>
           </ion-item>
           <ion-text color="danger" *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
             {{ getErrorMessage(registerForm, 'name') }}
-          </ion-text> -->
+          </ion-text>
 
           <ion-item class="input-item">
             <ion-icon name="mail-outline" slot="start" class="input-icon"></ion-icon>

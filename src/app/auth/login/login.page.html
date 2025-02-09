@@ -16,7 +16,7 @@
         <p class="subtitle">Acesse sua conta para continuar</p>
       </ion-card-header> 
       
-      <!-- 🔥 Exibir mensagem de erro -->
+      <!--  Exibir mensagem de erro -->
       <ion-card *ngIf="errorMessage">
         <ion-card-content>
           <ion-text color="danger">{{ errorMessage }}</ion-text>
@@ -40,9 +40,10 @@
           {{ getErrorMessage(loginForm, 'password') }}
         </ion-text>
 
-        <ion-button expand="full" shape="round" color="primary" type="submit" [disabled]="loginForm.invalid">
+        <ion-button expand="full" shape="round" color="primary" type="submit" [disabled]="loginForm.invalid || loading">
           <ion-icon name="log-in-outline" slot="start"></ion-icon>
-          Entrar
+          <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+            <span *ngIf="!loading">Entrar</span>
         </ion-button>
 
         <ion-button expand="full" fill="clear" shape="round" color="secondary" routerLink="/register">

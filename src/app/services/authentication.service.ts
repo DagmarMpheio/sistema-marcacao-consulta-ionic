@@ -14,6 +14,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   User as FirebaseUser,
+  onAuthStateChanged,
 } from '@angular/fire/auth';
 import { Firestore, doc, setDoc, docData } from '@angular/fire/firestore';
 import { User } from '../models/user';
@@ -79,8 +80,7 @@ export class AuthenticationService {
 
   // Retorna verdadeiro se o e-mail do usuário foi verificado
   get isEmailVerified(): boolean {
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
-    return user?.emailVerified ?? false;
+    return this.auth.currentUser?.emailVerified ?? false;
   }
 
   // Retorna verdadeiro se o usuário for administrador
@@ -90,6 +90,7 @@ export class AuthenticationService {
 
   // Login com e-mail e senha
   async signIn(email: string, password: string): Promise<void> {
+    let isAdmin = false;
     try {
       const result = await signInWithEmailAndPassword(
         this.auth,
@@ -98,20 +99,25 @@ export class AuthenticationService {
       );
       const userData = await this.getUserDataByUserId(
         result.user.uid
-      ).toPromise();
-      this.setUserData(result.user, userData?.isAdmin || false);
-    } catch (error: any) {
-      console.error('Erro ao fazer login:',error);
+      ).subscribe((userData) => {
+        if (userData) {
+          isAdmin = userData.isAdmin || false;
+          this.setUserData(result.user, isAdmin);
+        } else {
+          console.error('Dados do usuário não encontrados.');
+          this.setUserData(result.user, isAdmin);
+        }
+      });
+
+      console.log('userData: ', userData);
+    } catch (error) {
+      console.error('Erro ao fazer login:', this.handleFirebaseError(error));
       throw new Error(this.handleFirebaseError(error));
     }
   }
 
   // Registro de novo usuário
-  async registerUser(
-    email: string,
-    password: string,
-    //displayName: string
-  ): Promise<void> {
+  async registerUser(email: string, password: string): Promise<void> {
     try {
       const result = await createUserWithEmailAndPassword(
         this.auth,
@@ -119,14 +125,8 @@ export class AuthenticationService {
         password
       );
 
-      // Actualiza o perfil do usuário com o displayName
-      //await this.updateUserProfile(displayName, '');
-
       // Salva os dados do usuário no Firestore ou outro banco
-      //await this.setUserData(result.user, false);
-
-      // Envia o e-mail de verificação
-      //await this.sendVerificationMail();
+      await this.setUserData(result.user, false);
     } catch (error: any) {
       console.error(
         'Erro ao registrar usuário:',
@@ -240,7 +240,7 @@ export class AuthenticationService {
       case 'auth/admin-restricted-operation':
         return 'Você está tentando realizar uma operação que exige privilégios administrativos ou o método de autenticação não está ativado no Firebase Console.';
       case 'auth/missing-email':
-        return 'Registro ou redefinição de senha sem um e-mail válido.';
+        return 'Email em falta.';
       default:
         return 'Ocorreu um erro. Tente novamente.';
     }

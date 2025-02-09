@@ -11,7 +11,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
-  errorMessage: string = ''; // 🔥 Armazena a mensagem de erro
+  errorMessage: string = ''; //  Armazena a mensagem de erro
   loading = false; // Variável para controle do spinner
 
   constructor(
@@ -49,9 +49,9 @@ export class RegisterPage implements OnInit {
       } catch (error: any) {
         console.error('Erro ao registrar:', error);
         this.errorMessage = error.message;
-        window.alert(error.message);
+        //window.alert(error.message);
       } finally {
-        this.loading = false; // 🔥 O spinner SEMPRE para, independentemente do resultado
+        this.loading = false; //  O spinner SEMPRE para, independentemente do resultado
       }
     } else {
       console.log('Formulário inválido');
