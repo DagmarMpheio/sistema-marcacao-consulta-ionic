@@ -20,7 +20,7 @@ export class RegisterPage implements OnInit {
     public router: Router
   ) {
     this.registerForm = this.fb.group({
-      //name: ['', [Validators.required, Validators.minLength(5)]],
+      displayName: ['', [Validators.required, Validators.minLength(5)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
@@ -30,14 +30,14 @@ export class RegisterPage implements OnInit {
 
   async register() {
     this.errorMessage = '';
-    this.loading = true; // Ativa o spinner
+    this.loading = true; // Activa o spinner
 
     if (this.registerForm.valid) {
-      const { email, password } = this.registerForm.value;
+      const { email, password, displayName } = this.registerForm.value;
 
       try {
         // Cria a conta do usuário
-        await this.authService.registerUser(email, password);
+        await this.authService.registerUser(email, password, displayName.trimEnd()); //trimEnd remove espaco em branco no fim
 
         // Envia e-mail de verificação
         await this.authService.sendVerificationMail();

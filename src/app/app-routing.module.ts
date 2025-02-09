@@ -31,6 +31,10 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () => import('./admin/dashboard/dashboard.module').then( m => m.DashboardPageModule)
   },
+  {
+    path: 'update-profile',
+    loadChildren: () => import('./auth/update-profile/update-profile.module').then( m => m.UpdateProfilePageModule)
+  },
 ];
 @NgModule({
   imports: [

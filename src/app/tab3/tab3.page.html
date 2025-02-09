@@ -1,17 +1,40 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
+    <ion-title>Perfil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirmSignOut()" fill="clear">
+        <ion-icon name="exit"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="profile-container" *ngIf="userData.email">
+    <ion-avatar class="profile-avatar">
+      <ion-img 
+        [src]="userData.photoURL || 'assets/img/sem-imagem.jpg'" 
+        [alt]="userData.displayName || 'Usuário Sem Nome'">
+      </ion-img>
+    </ion-avatar>
+    <h2>{{ userData.displayName || 'Nome Não Disponível' }}</h2>
+    <p>{{ userData.email }}</p>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+    <!-- Botão para actualizar perfil -->
+    <ion-button expand="block" routerLink="/update-profile">
+      <ion-icon name="create-outline" slot="start"></ion-icon>
+      Editar Perfil
+    </ion-button>
+  </div>
+
+  <div class="empty-profile" *ngIf="!userData.email">
+    <ion-grid>
+      <ion-col>
+        <h1>Faça Login para ver os seus dados</h1>
+      </ion-col>
+      <ion-col>
+        <ion-button [routerLink]="['/login']" expand="block">Fazer Login</ion-button>
+      </ion-col>
+    </ion-grid>
+  </div>
 </ion-content>

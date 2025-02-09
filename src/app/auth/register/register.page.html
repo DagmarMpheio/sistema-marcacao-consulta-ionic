@@ -27,10 +27,10 @@
         <ion-card-content>
           <ion-item class="input-item">
             <ion-icon name="person-outline" slot="start" class="input-icon"></ion-icon>
-            <ion-input type="text" formControlName="name" placeholder="Seu Nome"></ion-input>
+            <ion-input type="text" formControlName="displayName" placeholder="Seu Nome"></ion-input>
           </ion-item>
-          <ion-text color="danger" *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
-            {{ getErrorMessage(registerForm, 'name') }}
+          <ion-text color="danger" *ngIf="registerForm.get('displayName')?.invalid && registerForm.get('displayName')?.touched">
+            {{ getErrorMessage(registerForm, 'displayName') }}
           </ion-text>
 
           <ion-item class="input-item">

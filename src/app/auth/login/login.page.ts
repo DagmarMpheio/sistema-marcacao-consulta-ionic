@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
 
   async login() {
     this.errorMessage = ''; //  Resetar erro antes de tentar login
-    this.loading = true; // Ativa o spinner
+    this.loading = true; // Activa o spinner
 
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;

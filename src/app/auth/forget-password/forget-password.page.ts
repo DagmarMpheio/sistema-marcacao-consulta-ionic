@@ -28,7 +28,7 @@ export class ForgetPasswordPage implements OnInit {
 
   async resetPassword() {
     this.errorMessage = ''; //  Resetar erro antes de tentar repor a password
-    this.loading = true; // Ativa o spinner
+    this.loading = true; // Activa o spinner
 
     if (this.forgetPasswordForm.valid) {
       const { email } = this.forgetPasswordForm.value;

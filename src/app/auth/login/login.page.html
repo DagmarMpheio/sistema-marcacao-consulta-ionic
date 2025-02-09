@@ -43,7 +43,7 @@
         <ion-button expand="full" shape="round" color="primary" type="submit" [disabled]="loginForm.invalid || loading">
           <ion-icon name="log-in-outline" slot="start"></ion-icon>
           <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
-            <span *ngIf="!loading">Entrar</span>
+          <span *ngIf="!loading">Entrar</span>
         </ion-button>
 
         <ion-button expand="full" fill="clear" shape="round" color="secondary" routerLink="/register">
