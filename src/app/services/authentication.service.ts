@@ -101,7 +101,7 @@ export class AuthenticationService {
       ).toPromise();
       this.setUserData(result.user, userData?.isAdmin || false);
     } catch (error: any) {
-      console.error('Erro ao fazer login:', this.handleFirebaseError(error));
+      console.error('Erro ao fazer login:',error);
       throw new Error(this.handleFirebaseError(error));
     }
   }
@@ -110,7 +110,7 @@ export class AuthenticationService {
   async registerUser(
     email: string,
     password: string,
-    displayName: string
+    //displayName: string
   ): Promise<void> {
     try {
       const result = await createUserWithEmailAndPassword(
@@ -120,17 +120,18 @@ export class AuthenticationService {
       );
 
       // Actualiza o perfil do usuário com o displayName
-      await this.updateUserProfile(displayName, '');
+      //await this.updateUserProfile(displayName, '');
 
       // Salva os dados do usuário no Firestore ou outro banco
-      await this.setUserData(result.user, false);
+      //await this.setUserData(result.user, false);
 
       // Envia o e-mail de verificação
-      await this.sendVerificationMail();
+      //await this.sendVerificationMail();
     } catch (error: any) {
       console.error(
         'Erro ao registrar usuário:',
-        this.handleFirebaseError(error)
+        error
+        /* this.handleFirebaseError(error) */
       );
       throw new Error(this.handleFirebaseError(error));
     }
@@ -236,6 +237,10 @@ export class AuthenticationService {
         return 'Este e-mail já está cadastrado.';
       case 'auth/weak-password':
         return 'A senha deve ter pelo menos 6 caracteres.';
+      case 'auth/admin-restricted-operation':
+        return 'Você está tentando realizar uma operação que exige privilégios administrativos ou o método de autenticação não está ativado no Firebase Console.';
+      case 'auth/missing-email':
+        return 'Registro ou redefinição de senha sem um e-mail válido.';
       default:
         return 'Ocorreu um erro. Tente novamente.';
     }

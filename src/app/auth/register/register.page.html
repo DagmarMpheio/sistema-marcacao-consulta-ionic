@@ -5,60 +5,64 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding register-container">
-  <form [formGroup]="registerForm" (ngSubmit)="register()" class="register-form">
-    <ion-card class="register-card">
-      <div class="logo">
-        <img src="assets/img/app-logo.png" alt="Logo" class="logo-img">
-      </div>
+  <div class="register-wrapper">
+    <form [formGroup]="registerForm" (ngSubmit)="register()" class="register-form">
+      <ion-card class="register-card">
+        <div class="logo">
+          <img src="assets/img/app-logo.png" alt="Logo" class="logo-img">
+        </div>
 
-      <ion-card-header class="ion-text-center">
-        <ion-card-title class="welcome-text">Crie uma conta</ion-card-title>
-        <p class="subtitle">Insira os seus dados para continuar</p>
-      </ion-card-header> 
-      
-      <!-- 🔥 Exibir mensagem de erro -->
-      <ion-card *ngIf="errorMessage">
+        <ion-card-header class="ion-text-center">
+          <ion-card-title class="welcome-text">Crie uma conta</ion-card-title>
+          <p class="subtitle">Insira os seus dados para continuar</p>
+        </ion-card-header> 
+        
+        <!-- 🔥 Exibir mensagem de erro -->
+        <ion-card *ngIf="errorMessage">
+          <ion-card-content>
+            <ion-text color="danger">{{ errorMessage }}</ion-text>
+          </ion-card-content>
+        </ion-card>
+
         <ion-card-content>
-          <ion-text color="danger">{{ errorMessage }}</ion-text>
+          <!-- <ion-item class="input-item">
+            <ion-icon name="person-outline" slot="start" class="input-icon"></ion-icon>
+            <ion-input type="text" formControlName="name" placeholder="Seu Nome"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+            {{ getErrorMessage(registerForm, 'name') }}
+          </ion-text> -->
+
+          <ion-item class="input-item">
+            <ion-icon name="mail-outline" slot="start" class="input-icon"></ion-icon>
+            <ion-input type="email" formControlName="email" placeholder="Seu Email"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+            {{ getErrorMessage(registerForm, 'email') }}
+          </ion-text>
+
+          <ion-item class="input-item">
+            <ion-icon name="lock-closed-outline" slot="start" class="input-icon"></ion-icon>
+            <ion-input type="password" formControlName="password" placeholder="Sua Senha"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+            {{ getErrorMessage(registerForm, 'password') }}
+          </ion-text>
+
+          <ion-button expand="full" shape="round" color="primary" type="submit" [disabled]="registerForm.invalid || loading">
+            <ion-icon name="person-add-outline" slot="start"></ion-icon>
+            <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+            <span *ngIf="!loading">Registar</span>
+          </ion-button>
+          
+
+          <ion-button expand="full" fill="clear" shape="round" color="secondary" routerLink="/">
+            <ion-icon name="log-in-outline" slot="start"></ion-icon>
+            Já Tenho Conta
+          </ion-button>
+          
         </ion-card-content>
       </ion-card>
-
-      <ion-card-content>
-        <ion-item class="input-item">
-          <ion-icon name="person-outline" slot="start" class="input-icon"></ion-icon>
-          <ion-input type="text" formControlName="name" placeholder="Seu Nome"></ion-input>
-        </ion-item>
-        <ion-text color="danger" *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
-          {{ getErrorMessage(registerForm, 'name') }}
-        </ion-text>
-
-        <ion-item class="input-item">
-          <ion-icon name="mail-outline" slot="start" class="input-icon"></ion-icon>
-          <ion-input type="email" formControlName="email" placeholder="Seu Email"></ion-input>
-        </ion-item>
-        <ion-text color="danger" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-          {{ getErrorMessage(registerForm, 'email') }}
-        </ion-text>
-
-        <ion-item class="input-item">
-          <ion-icon name="lock-closed-outline" slot="start" class="input-icon"></ion-icon>
-          <ion-input type="password" formControlName="password" placeholder="Sua Senha"></ion-input>
-        </ion-item>
-        <ion-text color="danger" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-          {{ getErrorMessage(registerForm, 'password') }}
-        </ion-text>
-
-        <ion-button expand="full" shape="round" color="primary" type="submit" [disabled]="registerForm.invalid">
-          <ion-icon name="person-add-outline" slot="start"></ion-icon>
-          Registar
-        </ion-button>
-
-        <ion-button expand="full" fill="clear" shape="round" color="secondary" routerLink="/">
-          <ion-icon name="log-in-outline" slot="start"></ion-icon>
-          Já Tenho Conta
-        </ion-button>
-        
-      </ion-card-content>
-    </ion-card>
-  </form>
+    </form>
+  </div>
 </ion-content>

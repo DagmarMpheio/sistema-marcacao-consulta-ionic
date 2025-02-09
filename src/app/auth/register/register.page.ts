@@ -12,49 +12,50 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
   errorMessage: string = ''; // 🔥 Armazena a mensagem de erro
+  loading = false; // Variável para controle do spinner
 
   constructor(
     private fb: FormBuilder,
     public authService: AuthenticationService,
     public router: Router
-  ) {}
-
-  ngOnInit() {
+  ) {
     this.registerForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(5)]],
+      //name: ['', [Validators.required, Validators.minLength(5)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 
+  ngOnInit() {}
+
   async register() {
-    this.errorMessage = ''; // 🔥 Resetar erro antes de tentar register
+    this.errorMessage = '';
+    this.loading = true; // Ativa o spinner
+
     if (this.registerForm.valid) {
-      const { name, email, password } = this.registerForm.value;
+      const { email, password } = this.registerForm.value;
+
       try {
-        await this.authService
-          .registerUser(email.value, password.value, name.value)
-          .then((): any => {
-            if (this.authService.isEmailVerified) {
-              if (this.authService.isUserAdmin) {
-                this.router.navigate(['dashboard']);
-              } else {
-                this.router.navigate(['home']);
-              }
-            } else {
-              window.alert('Email não verificado');
-              return false;
-            }
-          })
-          .catch((error) => {
-            window.alert(error.message);
-          });
+        // Cria a conta do usuário
+        await this.authService.registerUser(email, password);
+
+        // Envia e-mail de verificação
+        await this.authService.sendVerificationMail();
+
+        // Redireciona para a página de verificação
+        this.router.navigate(['verify-email']);
+
+        console.log('Registo realizado com sucesso!');
       } catch (error: any) {
-        alert(error.message);
-        this.errorMessage = error.message; // 🔥 Exibir erro
+        console.error('Erro ao registrar:', error);
+        this.errorMessage = error.message;
+        window.alert(error.message);
+      } finally {
+        this.loading = false; // 🔥 O spinner SEMPRE para, independentemente do resultado
       }
     } else {
       console.log('Formulário inválido');
+      this.loading = false; // O spinner também deve parar se o formulário for inválido
     }
   }
 
